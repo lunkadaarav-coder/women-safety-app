@@ -1,0 +1,7 @@
+node_modules
+dist
+_team_submissions
+vite-dev*.log
+.env
+.env.local
+npm-debug.log*
