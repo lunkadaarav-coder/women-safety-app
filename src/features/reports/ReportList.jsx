@@ -1,13 +1,24 @@
-function getRiskLevel(report) {
-  const score =
-    report.upvotes -
-    report.downvotes +
-    (report.type === "Harassment" || report.type === "Stalking" ? 5 : 0) +
-    (report.type === "Suspicious Activity" ? 3 : 0);
+function getTrustScore(report) {
+  return report.upvotes - report.downvotes;
+}
 
-  if (score >= 8) return "Critical";
-  if (score >= 4) return "High";
-  if (score >= 1) return "Medium";
+function getRiskLevel(report) {
+  const trustScore = getTrustScore(report);
+
+  let baseRisk = 0;
+
+  if (report.type === "Harassment") baseRisk = 5;
+  else if (report.type === "Stalking") baseRisk = 5;
+  else if (report.type === "Suspicious Activity") baseRisk = 4;
+  else if (report.type === "Unsafe Route") baseRisk = 3;
+  else if (report.type === "Poor Lighting") baseRisk = 2;
+  else baseRisk = 1;
+
+  const finalRisk = baseRisk + trustScore;
+
+  if (finalRisk >= 8) return "Critical";
+  if (finalRisk >= 5) return "High";
+  if (finalRisk >= 2) return "Medium";
   return "Low";
 }
 
@@ -16,7 +27,7 @@ function ReportList({ reports, onVote }) {
     <div className="card">
       <h2>Community Feed</h2>
       <p className="helper">
-        Reports are validated by the community before strongly affecting risk zones.
+        Community votes validate reports and improve risk accuracy.
       </p>
 
       {reports.length === 0 ? (
@@ -25,32 +36,38 @@ function ReportList({ reports, onVote }) {
         </div>
       ) : (
         <div className="feed">
-          {reports.map((r) => {
-            const risk = getRiskLevel(r);
+          {reports.map((report) => {
+            const risk = getRiskLevel(report);
+            const trustScore = getTrustScore(report);
 
             return (
-              <div className="report-card" key={r.id}>
+              <div className="report-card" key={report.id}>
                 <div className="report-head">
-                  <span className="type-pill">{r.type}</span>
+                  <span className="type-pill">{report.type}</span>
                   <span className={`risk-pill ${risk.toLowerCase()}`}>
                     {risk} Risk
                   </span>
                 </div>
 
-                <h3>{r.location}</h3>
-                <p>{r.desc}</p>
-                <small>{r.time}</small>
+                <h3>{report.location}</h3>
+                <p>{report.desc}</p>
 
-                {r.media && <div className="media">📎 {r.media}</div>}
+                <small>Reported at: {report.timestamp}</small>
+
+                {report.media && (
+                  <div className="media">📎 Media: {report.media}</div>
+                )}
 
                 <div className="votes">
-                  <button onClick={() => onVote(r.id, "up")}>
-                    ▲ {r.upvotes}
+                  <button onClick={() => onVote(report.id, "up")}>
+                    ▲ {report.upvotes}
                   </button>
-                  <button onClick={() => onVote(r.id, "down")}>
-                    ▼ {r.downvotes}
+
+                  <button onClick={() => onVote(report.id, "down")}>
+                    ▼ {report.downvotes}
                   </button>
-                  <span>Trust Score: {r.upvotes - r.downvotes}</span>
+
+                  <span>Trust Score: {trustScore}</span>
                 </div>
               </div>
             );

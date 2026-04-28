@@ -13,6 +13,7 @@ body {
   padding: 24px;
   display: flex;
   justify-content: center;
+  background: #f3f5fb;
 }
 
 .app-shell {
@@ -134,6 +135,10 @@ textarea {
   box-shadow: 0 10px 22px rgba(112, 72, 207, 0.24);
 }
 
+.primary-btn:hover {
+  background: #5f3db8;
+}
+
 .empty {
   background: #f7f4ff;
   border: 1px dashed #c8b8f4;
@@ -231,6 +236,10 @@ textarea {
   font-weight: 900;
   cursor: pointer;
   border: 1px solid #e5defa;
+}
+
+.votes button:hover {
+  background: #f3edff;
 }
 
 .votes span {

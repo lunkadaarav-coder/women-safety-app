@@ -7,30 +7,35 @@ function ReportForm({ onAddReport }) {
   const [media, setMedia] = useState("");
 
   const handleSubmit = () => {
-    if (!location.trim()) return alert("Please enter location");
+    if (!location.trim()) {
+      alert("Please enter location");
+      return;
+    }
 
     const newReport = {
       id: Date.now(),
       type,
       location,
-      desc: desc || "No extra details provided.",
+      desc: desc || "No additional details provided.",
       media,
-      time: new Date().toLocaleString(),
+      timestamp: new Date().toLocaleString(),
       upvotes: 0,
       downvotes: 0,
     };
 
     onAddReport(newReport);
+
     setLocation("");
     setDesc("");
     setMedia("");
+    setType("Suspicious Activity");
   };
 
   return (
     <div className="card">
       <h2>Report an Unsafe Area</h2>
       <p className="helper">
-        Use this form to alert the community about safety risks nearby.
+        Submit incident details to alert the community and improve risk mapping.
       </p>
 
       <label>Incident Type</label>
@@ -50,14 +55,14 @@ function ReportForm({ onAddReport }) {
         placeholder="E.g., College Gate, Market Road"
       />
 
-      <label>Details (Optional)</label>
+      <label>Details</label>
       <textarea
         value={desc}
         onChange={(e) => setDesc(e.target.value)}
-        placeholder="Briefly describe what happened or what the risk is..."
+        placeholder="Briefly describe what happened..."
       />
 
-      <label>Media (Optional)</label>
+      <label>Optional Media</label>
       <input
         value={media}
         onChange={(e) => setMedia(e.target.value)}

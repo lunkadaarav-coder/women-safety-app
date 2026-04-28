@@ -7,22 +7,24 @@ function App() {
   const [activeTab, setActiveTab] = useState("report");
   const [reports, setReports] = useState([]);
 
-  const addReport = (report) => {
-    setReports([report, ...reports]);
+  const addReport = (newReport) => {
+    setReports([newReport, ...reports]);
     setActiveTab("feed");
   };
 
-  const vote = (id, type) => {
+  const vote = (id, voteType) => {
     setReports(
-      reports.map((r) =>
-        r.id === id
-          ? {
-              ...r,
-              upvotes: type === "up" ? r.upvotes + 1 : r.upvotes,
-              downvotes: type === "down" ? r.downvotes + 1 : r.downvotes,
-            }
-          : r
-      )
+      reports.map((report) => {
+        if (report.id !== id) return report;
+
+        return {
+          ...report,
+          upvotes:
+            voteType === "up" ? report.upvotes + 1 : report.upvotes,
+          downvotes:
+            voteType === "down" ? report.downvotes + 1 : report.downvotes,
+        };
+      })
     );
   };
 
@@ -41,6 +43,7 @@ function App() {
           >
             Report Incident
           </button>
+
           <button
             className={activeTab === "feed" ? "active" : ""}
             onClick={() => setActiveTab("feed")}
