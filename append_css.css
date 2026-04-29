@@ -1,0 +1,197 @@
+
+/* ==============================================================
+   DARK MODE OVERRIDES & UI POLISH
+   ============================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --bg-dark: #09090b;
+  --bg-card: #18181b;
+  --bg-card-hover: #27272a;
+  --border-color: #27272a;
+  
+  --primary: #8b5cf6;
+  --primary-hover: #7c3aed;
+  --primary-glow: rgba(139, 92, 246, 0.4);
+  
+  --danger: #ef4444;
+  --danger-glow: rgba(239, 68, 68, 0.4);
+  
+  --safe: #10b981;
+  --safe-glow: rgba(16, 185, 129, 0.4);
+
+  --text-main: #f4f4f5;
+  --text-muted: #a1a1aa;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+}
+
+.app {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+  background-color: var(--bg-dark);
+}
+
+.sidebar {
+  width: 260px;
+  background-color: var(--bg-card);
+  border-right: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 40px;
+}
+
+.brand-mark {
+  background: linear-gradient(135deg, var(--primary), #ec4899);
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  box-shadow: 0 4px 12px var(--primary-glow);
+}
+
+.brand strong {
+  display: block;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.brand span {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+nav {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+nav button {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+  padding: 12px 16px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  text-align: left;
+}
+
+nav button:hover {
+  background-color: var(--bg-card-hover);
+  color: var(--text-main);
+}
+
+nav button.active {
+  background-color: var(--primary-glow);
+  color: var(--primary);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+}
+
+.content {
+  flex: 1;
+  overflow-y: auto;
+  position: relative;
+  background-color: var(--bg-dark);
+}
+
+.mobile-header {
+  padding: 24px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border-color);
+  background-color: rgba(9, 9, 11, 0.8);
+  backdrop-filter: blur(12px);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.eyebrow {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.mobile-header h1 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-top: 4px;
+  color: var(--text-main);
+}
+
+/* Fix Map Wrapper inside Content so it fills the screen */
+.sm-wrapper {
+  background-color: var(--bg-dark) !important;
+  color: var(--text-main) !important;
+  /* Instead of taking whole viewport, take up the parent container height */
+  height: calc(100vh - 100px); 
+  width: 100%;
+}
+
+.sm-topbar {
+  background-color: var(--bg-card) !important;
+  border-bottom: 1px solid var(--border-color) !important;
+}
+
+.sm-sidebar {
+  background-color: var(--bg-card) !important;
+  border-right: 1px solid var(--border-color) !important;
+}
+
+.sm-tab-content {
+  background-color: var(--bg-card) !important;
+}
+
+.sm-location-card, .sm-feed-item {
+  background-color: var(--bg-card-hover) !important;
+  border: 1px solid var(--border-color) !important;
+  color: var(--text-main) !important;
+}
+
+.sm-viewnav-btn {
+  color: var(--text-muted) !important;
+}
+.sm-viewnav-btn.active {
+  color: var(--primary) !important;
+  border-bottom-color: var(--primary) !important;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-dark);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
